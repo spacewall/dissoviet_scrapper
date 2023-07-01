@@ -59,6 +59,7 @@ def tables_loading():
                 members = [member.text for member in compos.find(class_="dissovet-members").find_all(class_="prop-value")]
 
                 df = pd.DataFrame({"Название диссовета": [dissovet_name],
+                        "Статус": "работает",
                         "Институт": [description.find(class_="dissovet-org").find(class_="prop-value").text],
                         "Отрасль науки": [science_direction],
                         "Специальность": [spec],
