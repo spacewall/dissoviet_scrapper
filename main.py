@@ -72,7 +72,7 @@ def tables_loading():
                         "Секретарь": [compos.find(class_="dissovet-secretary").find(class_="prop-value").text],
                         "Члены совета": [", ".join(members)]
                     })
-                dissovet_name = dissovet_name + f"_({spec}_{science_direction})"
+                dissovet_name = dissovet_name + f"_{spec}_{science_direction}"
                 dissovet_name = dissovet_name.replace(" ", "_").replace(".", "_").replace("-", "_").replace(",", "")
                 df.to_excel(f"./tables/{dissovet_name}.xlsx")
 
@@ -83,7 +83,8 @@ def tables_loading():
 def create_log():
     log = dict()
     for table_name in os.listdir("tables"):
-        link = pd.read_excel(f"./tables/{table_name}", usecols=[8])["Сайт"].get(0)
+        link = pd.read_excel(f"tables/{table_name}")["Сайт"].get(0)
+
         log.update({table_name: [False, link]})
         
     with open("log.json", "w") as file:
@@ -129,7 +130,6 @@ def main():
     # tables_loading()
     # create_log()
     start_working()
-
 
 if __name__ == "__main__":
     main()
