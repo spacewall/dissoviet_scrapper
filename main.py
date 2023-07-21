@@ -9,6 +9,7 @@ from time import sleep
 import random
 import os
 import json
+import time
 
 def get_site_pages(url, headers):
     if "pages" not in os.listdir():
@@ -83,11 +84,11 @@ def tables_loading():
 def create_log():
     log = dict()
     for table_name in os.listdir("tables"):
-        link = pd.read_excel(f"tables/{table_name}")["Сайт"].get(0)
+        link = pd.read_excel(f"tables\{table_name}")["Сайт"].get(0)
 
         log.update({table_name: [False, link]})
-        
-    with open("log.json", "w") as file:
+
+    with open("log.json", mode='w', encoding='UTF-8') as file:
         json.dump(log, file, indent=4, ensure_ascii=False)
 
 def start_working():
@@ -95,7 +96,7 @@ def start_working():
     if dirs == []:
         print(f"[!] Please, load tables previously!")
     else:
-        with open("log.json", "r") as log:
+        with open("log.json", "r", encoding='UTF-8') as log:
              dissoviets = json.load(log)
         
         counter = 0
@@ -103,20 +104,21 @@ def start_working():
             counter += 1
             if item[0] == True:
                 continue
-            
-            driver = webdriver.Firefox()
-            driver.get(item[1])
-            osCommandString = f"open 'tables/{soviet}'"
-            os.system(osCommandString)
             try:
-                element = WebDriverWait(driver, 3600).until(EC.number_of_windows_to_be(0))
+                with webdriver.Firefox(keep_alive=False) as driver:
+                    driver.get(item[1])
+                    osCommandString = f".\\tables\{soviet}"
+                    os.system(osCommandString)
+                    element = WebDriverWait(driver, 3600).until(EC.number_of_windows_to_be(0))
+            except:
+                pass
+            finally:
                 dissoviets[soviet] = [True, item[1]]
                 print(f"[*] {soviet} has done ({counter}/{len(dissoviets)})…")
-            finally:
-                driver.quit()
 
-                with open("log.json", "w") as log:
+                with open("log.json", "w", encoding='UTF-8') as log:
                     json.dump(dissoviets, log, ensure_ascii=False, indent=4)
+
 
 def main():
     url = "https://disser.niirosatom.ru/dissovety/"
