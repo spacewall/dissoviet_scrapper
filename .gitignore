@@ -1,0 +1,8 @@
+geckodriver.log
+Actual_form.xlsx
+/pages
+/venv
+.DS_Store
+.idea
+main.py
+requirements.txt
