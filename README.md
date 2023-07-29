@@ -15,7 +15,7 @@ The next step is checking. Then you should do
 *Note:* don't add third-party files into your directory, please, check it before add-commit-push steps.
 
 Let's commit
-<code>git commit -m 'Check __number__of__files__'</code>
+- <code>git commit -m 'Check __number__of__files__'</code>
 
 The last step is
-<code>git push origin checking</code>
+- <code>git push origin checking</code>
