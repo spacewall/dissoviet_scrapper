@@ -22,4 +22,4 @@ The last step is
 - <code>git push origin checking</code>
 
 ## Note
-This branch is intended only for verification, do not add third-party files here (except for the table folder, .gitignore and log.json).
+This branch is intended only for verification, don't add third-party files here (except for the table folder, .gitignore and log.json).
