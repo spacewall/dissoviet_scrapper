@@ -2,6 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 import lxml
 from selenium import webdriver
+from webdriver_manager.firefox import GeckoDriverManager
+from selenium.webdriver.firefox.service import Service
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import pandas as pd
@@ -104,10 +106,14 @@ def start_working():
             if item[0] == True:
                 continue
             
-            driver = webdriver.Firefox()
-            driver.get(item[1])
+            driver_path = GeckoDriverManager().install()
+            driver_service = Service(executable_path=driver_path)
+            browser = webdriver.Firefox(service=driver_service)
+            browser.get(item[1])
+
             osCommandString = f"open 'tables/{soviet}'"
             os.system(osCommandString)
+
             try:
                 element = WebDriverWait(driver, 3600).until(EC.number_of_windows_to_be(0))
                 dissoviets[soviet] = [True, item[1]]
