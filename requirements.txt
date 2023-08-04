@@ -32,4 +32,3 @@ webdriver-manager==3.8.6
 wsproto==1.2.0
 xlrd==2.0.1
 XlsxWriter==3.1.2
- 
